@@ -133,7 +133,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     protected Class timePeriodClass;
 
     /** The list of data items in the series. */
-    protected List data;
+    private List data;
 
     /** The maximum number of items for the series. */
     private int maximumItemCount;
@@ -1055,6 +1055,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         }
         TimeSeries copy = (TimeSeries) super.clone();
         copy.data = new java.util.ArrayList();
+        copy.maxY=Double.MIN_VALUE;
+        copy.minY=Double.MAX_VALUE;
         if (this.data.size() > 0) {
             for (int index = start; index <= end; index++) {
                 TimeSeriesDataItem item
