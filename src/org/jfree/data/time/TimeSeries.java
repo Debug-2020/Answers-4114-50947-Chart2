@@ -1027,7 +1027,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @throws CloneNotSupportedException not thrown by this class, but
      *         subclasses may differ.
      */
-    public Object clone() throws CloneNotSupportedException {
+    public TimeSeries clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
         return clone;
@@ -1055,12 +1055,11 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         }
         TimeSeries copy = (TimeSeries) super.clone();
         copy.data = new java.util.ArrayList();
-        copy.minY = Double.NaN;
-        copy.maxY = Double.NaN;
         if (this.data.size() > 0) {
             for (int index = start; index <= end; index++) {
                 TimeSeriesDataItem item
                         = (TimeSeriesDataItem) this.data.get(index);
+                System.out.println(item.getValue());
                 TimeSeriesDataItem clone = (TimeSeriesDataItem) item.clone();
                 try {
                     copy.add(clone);
@@ -1211,7 +1210,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      */
     private void updateBoundsForAddedItem(TimeSeriesDataItem item) {
         Number yN = item.getValue();
-        if (item.getValue() != null) {
+        if (yN != null) {
             double y = yN.doubleValue();
             this.minY = minIgnoreNaN(this.minY, y);
             this.maxY = maxIgnoreNaN(this.maxY, y);
